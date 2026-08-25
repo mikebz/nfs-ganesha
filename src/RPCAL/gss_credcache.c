@@ -670,11 +670,11 @@ static int find_keytab_entry(krb5_context context, krb5_keytab kt,
 	}
 
 	/* Compute the active directory machine name HOST$ */
-	strcpy(myhostad, myhostname);
+	strlcpy(myhostad, myhostname, sizeof(myhostad) - 1);
 	for (i = 0; myhostad[i] != 0; ++i)
-		myhostad[i] = toupper(myhostad[i]);
+		myhostad[i] = toupper((unsigned char)myhostad[i]);
 	myhostad[i] = '$';
-	myhostad[i + 1] = 0;
+	myhostad[i + 1] = '\0';
 
 	retval = get_full_hostname(myhostname, myhostname, sizeof(myhostname));
 	if (retval)
