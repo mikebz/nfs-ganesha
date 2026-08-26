@@ -668,6 +668,8 @@ static int find_keytab_entry(krb5_context context, krb5_keytab kt,
 		gsh_free(k5err, MEM_COMP_PROTOCOL);
 		goto out;
 	}
+	/* Ensure NUL-termination in case gsh_gethostname() truncates */
+	myhostname[sizeof(myhostname) - 1] = '\0';
 
 	/* Compute the active directory machine name HOST$ */
 	strlcpy(myhostad, myhostname, sizeof(myhostad) - 1);
